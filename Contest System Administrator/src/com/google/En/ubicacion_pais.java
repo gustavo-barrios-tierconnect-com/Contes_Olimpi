@@ -1,5 +1,4 @@
 package com.google.En;
-
 import java.util.Date;
 
 
@@ -49,28 +48,27 @@ import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.FilterOperator;
+public class ubicacion_pais {
 
-public class Distrito {
-
-	String id_distrito,descripcion,codigo;
+	String id_ubicacion_pais,descripcion,codigo;
 	boolean habilitado;
-	Entity Dis=null;
+	Entity U_p=null;
 	
 	public DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 	
-	public Distrito(){
-		id_distrito="";
+	public ubicacion_pais(){
+		id_ubicacion_pais="";
 		descripcion="";
 		codigo="";
 		habilitado=true;
 	}
-	
-	public String getId_distrito() {
-		return id_distrito;
+
+	public String getId_ubicacion_pais() {
+		return id_ubicacion_pais;
 	}
 
-	public void setId_distrito(String id_distrito) {
-		this.id_distrito = id_distrito;
+	public void setId_ubicacion_pais(String id_ubicacion_pais) {
+		this.id_ubicacion_pais = id_ubicacion_pais;
 	}
 
 	public String getDescripcion() {
@@ -96,76 +94,74 @@ public class Distrito {
 	public void setHabilitado(boolean habilitado) {
 		this.habilitado = habilitado;
 	}
-
 	
-	public Distrito(String a,String b,String c){
-		id_distrito=a;
+	public ubicacion_pais(String a , String b, String c){
+		id_ubicacion_pais=a;
 		descripcion=b;
 		codigo=c;
 	}
-	public void adicionar(String a,String b,String c) {
 	
-		Key id_distrito_Key = KeyFactory.createKey("Distrito", a);
+	public void adicionar() {
+		
+		Key id_ubicacion_pais_Key = KeyFactory.createKey("ubicacion_pais", id_ubicacion_pais);
 		Date date = new Date();
-        Entity Distrito = new Entity("Distrito", id_distrito_Key);
-        Distrito.setProperty("id_distrito", a);
-        Distrito.setProperty("descripcion", b);
-        Distrito.setProperty("codigo", c);
-        Distrito.setProperty("habilitado",true);
-        Distrito.setProperty("date", date);
-        datastore.put(Distrito);        
+        Entity ubicacion_pais = new Entity("ubicacion_pais", id_ubicacion_pais_Key);
+        ubicacion_pais.setProperty("id_ubicacion_pais", id_ubicacion_pais);
+        ubicacion_pais.setProperty("descripcion", descripcion);
+        ubicacion_pais.setProperty("codigo", codigo);
+        ubicacion_pais.setProperty("habilitado",true);
+        ubicacion_pais.setProperty("date", date);
+        datastore.put(ubicacion_pais);        
 	}
-
+	
 	public void listarC(){
 		
-		Query query = new Query("Distrito").addSort("date", Query.SortDirection.DESCENDING);
-	    List<Entity> Distrito = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(10));
-	    if (Distrito.isEmpty()) {
-	    	System.out.println("  no Distritos");
+		Query query = new Query("ubicacion_pais").addSort("date", Query.SortDirection.DESCENDING);
+	    List<Entity> ubicacion_pais = datastore.prepare(query).asList(FetchOptions.Builder.withDefaults());
+	    if (ubicacion_pais.isEmpty()) {
+	    	System.out.println("  no ubicacion_pais");
 	    } 
 	    else {
-	    	System.out.println("there districts and are ....");
-	        for (int i=0;i<Distrito.size();i++) {
-	        	System.out.println("--->"+Distrito.set(i, Dis).getProperties());
+	    	System.out.println("there ubicacion_paises and are ....");
+	        for (int i=0;i<ubicacion_pais.size();i++) {
+	        	System.out.println("--->"+ubicacion_pais.set(i, U_p).getProperties());
 	        }
 	    }    
 	}
 	
 	public List<Entity> listarL(){
 
-		Query query = new Query("Distrito").addSort("date", Query.SortDirection.DESCENDING);
-		List<Entity> Distrito = datastore.prepare(query).asList(FetchOptions.Builder.withDefaults()); 
-		return Distrito;	    
+		Query query = new Query("ubicacion_pais").addSort("date", Query.SortDirection.DESCENDING);
+		List<Entity> ubicacion_pais = datastore.prepare(query).asList(FetchOptions.Builder.withDefaults()); 
+		return ubicacion_pais;	    
 	}
 	
-	
-
 	public Vector<Entity> listarV(){
 
-		Query query = new Query("Distrito").addSort("date", Query.SortDirection.DESCENDING);
-		List<Entity> Distrito = datastore.prepare(query).asList(FetchOptions.Builder.withDefaults());
+		Query query = new Query("ubicacion_pais").addSort("date", Query.SortDirection.DESCENDING);
+		List<Entity> ubicacion_pais = datastore.prepare(query).asList(FetchOptions.Builder.withDefaults());
 		Vector<Entity>v = new Vector<Entity>();
-		if (Distrito.isEmpty()) {
-		    System.out.println("  no Distritos");
+		if (ubicacion_pais.isEmpty()) {
+		    System.out.println("  no ubicacion_pais");
 		} 
 		else {
-		   for (Entity greeting : Distrito) {
+		   for (Entity greeting : ubicacion_pais) {
 		        v.add(greeting);
 		    }
 		 }   
 		 return v;	    
 	}
 	
-	public Entity buscar(String id_distrito){
+	public Entity buscar(String id_ubicacion_pais){
 		Entity e=null;
-		Query query = new Query("Distrito").addSort("date", Query.SortDirection.DESCENDING);
-		List<Entity> Distrito = datastore.prepare(query).asList(FetchOptions.Builder.withDefaults());
-		if (Distrito.isEmpty()) {
-		    System.out.println("  no Distritos");
+		Query query = new Query("ubicacion_pais").addSort("date", Query.SortDirection.DESCENDING);
+		List<Entity> ubicacion_pais = datastore.prepare(query).asList(FetchOptions.Builder.withDefaults());
+		if (ubicacion_pais.isEmpty()) {
+		    System.out.println("  no UE_area");
 		} 
 		else {
-		   for (Entity greeting : Distrito) {
-		        if(greeting.getProperty("id_distrito").equals(id_distrito))
+		   for (Entity greeting : ubicacion_pais) {
+		        if(greeting.getProperty("id_ubicacion_pais").equals(id_ubicacion_pais))
 		        	e=greeting;
 		    }
 		 }   
@@ -173,22 +169,22 @@ public class Distrito {
 	}
 	
 	public void delete(String i){
- 
-	    Query query = new Query("Distrito");
-	    query.addFilter("id_distrito", FilterOperator.EQUAL, i);
-	    System.out.println(query);
+		 
+	    Query query = new Query("ubicacion_pais");
+	    query.addFilter("id_ubicacion_pais", FilterOperator.EQUAL, i);
 	    PreparedQuery pq = datastore.prepare(query);
-	    System.out.println(query);
-	    Entity Distrito = pq.asSingleEntity();
-	    datastore.delete(Distrito.getKey());
+	    Entity ubicacion_pais = pq.asSingleEntity();
+	    datastore.delete(ubicacion_pais.getKey());
 	}
 	
 	public void update(String i){
 		
-		Query query = new Query("Distrito");
-	    query.addFilter("id_distrito", FilterOperator.EQUAL, i);
+		Query query = new Query("ubicacion_pais");
+	    query.addFilter("id_ubicacion_pais", FilterOperator.EQUAL, i);
 	    PreparedQuery pq = datastore.prepare(query);
-	    Entity Distrito = pq.asSingleEntity();
-	    datastore.delete(Distrito.getKey()); 
+	    Entity ubicacion_pais = pq.asSingleEntity();
+	    datastore.delete(ubicacion_pais.getKey());  
 	}
+	
+	
 }

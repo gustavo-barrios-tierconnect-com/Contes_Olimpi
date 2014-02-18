@@ -30,13 +30,38 @@ import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.FilterOperator;
 
+
+
 @Controller
 @RequestMapping("/customer")
 public class CustomerController {
+	
+	public DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+	
 	private static Entity Distrito = null;
+	private static Entity UE_turno = null;
+	private static Entity UE_dependencia= null;
+	private static Entity UE_area= null;
+	private static Entity ubicacion_pais=null;
+	private static Entity ubicacion_departamento=null;
+	private static Entity Ubicacion_provincia=null;
+	private static Entity Ubicacion_seccion=null;
+	private static Entity Ubicacion_canton=null;
+	private static Entity ubicacion_localidad=null;
+	private static Entity Ubicacion_zona=null;
+	Ubicacion_zona uz=new Ubicacion_zona();
+	ubicacion_localidad ul=new ubicacion_localidad();
+	Ubicacion_canton uc=new Ubicacion_canton();
+	Ubicacion_seccion use=new Ubicacion_seccion();
+	Ubicacion_provincia us=new Ubicacion_provincia();
+	ubicacion_departamento ud=new ubicacion_departamento();
 	Usuario u=new Usuario();
 	Persona per=new Persona();
 	Distrito d=new Distrito();
+	UE_turno t=new UE_turno();
+	UE_area ar=new UE_area();
+	UE_dependencia de=new UE_dependencia();
+	ubicacion_pais upro=new ubicacion_pais();
 	public Scanner leer=new Scanner(System.in);
 	//get all customers
 	@RequestMapping(value="/register", method = RequestMethod.GET)
@@ -47,37 +72,51 @@ public class CustomerController {
 	
 	@RequestMapping(value="/Distrito", method = RequestMethod.GET)
 	public String Distritos(ModelMap model) {
+		
+		 
+		
+		
+		uz.listarC();
+		System.out.println("si si es primera ves");
+		if(leer.next().equals("si")){
+			System.out.println("adicionar");
+			String a=leer.next(),b=leer.next(),c=leer.next(),d=leer.next();
+			uz=new Ubicacion_zona(a,b,c,d);
+			uz.adicionar();
+		}
+		
 		System.out.println("entro a distrito y va a listar....");
-		
-		
-		d.listarC();
+		uz.listarC();
 		System.out.println("adicionar");
-		String a=leer.next(),b=leer.next(),c=leer.next();
-		d=new Distrito();
-		d.adicionar(a,b,c);
-		d.listarC();
+		String a=leer.next(),b=leer.next(),c=leer.next(),d=leer.next();
+		uz=new Ubicacion_zona(a,b,c,d);
+		uz.adicionar();
+		uz.listarC();
 		
 		System.out.println("ahora vamos a buscar ");
 		String aa;
 		aa=leer.next();
-		Distrito = d.buscar(aa);
-		d.listarC();
+		Ubicacion_provincia = null;
+		Ubicacion_provincia = uz.buscar(aa);
+		if(Ubicacion_provincia != null)
+			System.out.println("si existe.....");
+		else System.out.println("No existe....");
+		uz.listarC();
 		
 		
 		System.out.println("ahora vamos a eliminar ");
 		aa=leer.next();
-		d.delete(aa);
-		d.listarC();
+		uz.delete(aa);
+		uz.listarC();
 	
 		
 		System.out.println("ahora vamos a editar ");
 		aa=leer.next();
-		a=leer.next();b=leer.next();c=leer.next();
-		
-		d.delete(aa);
-		d=new Distrito(a,b,c);
-		d.adicionar(a,b,c);
-		d.listarC();
+		a=leer.next();b=leer.next();c=leer.next();d=leer.next();
+		uz.delete(aa);
+		uz=new Ubicacion_zona(a,b,c,d);
+		uz.adicionar();
+		uz.listarC();
 		
 		return "thank";
 	}
