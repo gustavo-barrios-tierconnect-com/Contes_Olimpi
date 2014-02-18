@@ -49,7 +49,21 @@ public class CustomerController {
 	private static Entity Ubicacion_canton=null;
 	private static Entity ubicacion_localidad=null;
 	private static Entity Ubicacion_zona=null;
-	Ubicacion_zona uz=new Ubicacion_zona();
+	private static Entity Ubicacion_calle=null;
+	private static Entity Evaluacion=null;
+	private static Entity Administracion_permisos=null;
+	private static Entity Administracion_roles=null;
+	private static Entity Administracion_roles_permisos=null;
+	private static Entity Administracion_usuario_roles=null;
+	private static Entity Parentezco=null;
+	Parentezco pa=new Parentezco();
+	Administracion_usuario_roles aur=new Administracion_usuario_roles();
+	Administracion_roles_permisos aro=new Administracion_roles_permisos(); 
+	Administracion_roles_permisos arp=new Administracion_roles_permisos();
+	Administracion_permisos ap=new Administracion_permisos();
+	Evaluacion ev=new Evaluacion();
+	Ubicacion_calle uca=new Ubicacion_calle();
+	Ubicacion_zona uzo=new Ubicacion_zona();
 	ubicacion_localidad ul=new ubicacion_localidad();
 	Ubicacion_canton uc=new Ubicacion_canton();
 	Ubicacion_seccion use=new Ubicacion_seccion();
@@ -73,50 +87,47 @@ public class CustomerController {
 	@RequestMapping(value="/Distrito", method = RequestMethod.GET)
 	public String Distritos(ModelMap model) {
 		
-		 
-		
-		
-		uz.listarC();
+		pa.listarC();
 		System.out.println("si si es primera ves");
 		if(leer.next().equals("si")){
 			System.out.println("adicionar");
-			String a=leer.next(),b=leer.next(),c=leer.next(),d=leer.next();
-			uz=new Ubicacion_zona(a,b,c,d);
-			uz.adicionar();
+			String a=leer.next(),b=leer.next();
+			pa=new Parentezco(a,b);
+			pa.adicionar();
 		}
 		
 		System.out.println("entro a distrito y va a listar....");
-		uz.listarC();
+		pa.listarC();
 		System.out.println("adicionar");
-		String a=leer.next(),b=leer.next(),c=leer.next(),d=leer.next();
-		uz=new Ubicacion_zona(a,b,c,d);
-		uz.adicionar();
-		uz.listarC();
+		String a=leer.next(),b=leer.next();
+		pa=new Parentezco(a,b);
+		pa.adicionar();
+		pa.listarC();
 		
 		System.out.println("ahora vamos a buscar ");
 		String aa;
 		aa=leer.next();
 		Ubicacion_provincia = null;
-		Ubicacion_provincia = uz.buscar(aa);
+		Ubicacion_provincia = pa.buscar(aa);
 		if(Ubicacion_provincia != null)
 			System.out.println("si existe.....");
 		else System.out.println("No existe....");
-		uz.listarC();
+		pa.listarC();
 		
 		
 		System.out.println("ahora vamos a eliminar ");
 		aa=leer.next();
-		uz.delete(aa);
-		uz.listarC();
+		pa.delete(aa);
+		pa.listarC();
 	
 		
 		System.out.println("ahora vamos a editar ");
 		aa=leer.next();
-		a=leer.next();b=leer.next();c=leer.next();d=leer.next();
-		uz.delete(aa);
-		uz=new Ubicacion_zona(a,b,c,d);
-		uz.adicionar();
-		uz.listarC();
+		a=leer.next();b=leer.next();
+		pa.delete(aa);
+		pa=new Parentezco(a,b);
+		pa.adicionar();
+		pa.listarC();
 		
 		return "thank";
 	}
